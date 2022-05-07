@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../models/city.dart';
 import '../models/space.dart';
 import '../models/tips.dart';
+import '../widgets/bottom_navigation_item.dart';
 import '../widgets/city_card.dart';
 import '../widgets/space_card.dart';
 import '../widgets/tips_card.dart';
@@ -183,9 +184,30 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(
+              height: 50 + edge,
+            ),
           ],
         ),
       ),
+      floatingActionButton: Container(
+        height: 65,
+        margin: EdgeInsets.symmetric(horizontal: edge),
+        decoration: BoxDecoration(
+          color: const Color(0xffF6F7F8),
+          borderRadius: BorderRadius.circular(23),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: const [
+            BottonNavbarItem(imageUrl: 'assets/home_icon.png', isActive: true),
+            BottonNavbarItem(imageUrl: 'assets/mail_icon.png', isActive: false),
+            BottonNavbarItem(imageUrl: 'assets/card_icon.png', isActive: false),
+            BottonNavbarItem(imageUrl: 'assets/love_icon.png', isActive: false),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
