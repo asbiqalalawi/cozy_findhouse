@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../models/space.dart';
 import '../theme.dart';
 
 class SpaceCard extends StatelessWidget {
   const SpaceCard({
     Key? key,
+    required this.space,
   }) : super(key: key);
+  final Space space;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class SpaceCard extends StatelessWidget {
             child: Stack(
               children: [
                 Image.asset(
-                  'assets/space1.png',
+                  space.imageUrl,
                   fit: BoxFit.cover,
                 ),
                 Align(
@@ -40,7 +43,7 @@ class SpaceCard extends StatelessWidget {
                           height: 16,
                         ),
                         Text(
-                          '4/5',
+                          '${space.rating}/5',
                           style: whiteTextStyle.copyWith(fontSize: 13),
                         )
                       ],
@@ -55,10 +58,32 @@ class SpaceCard extends StatelessWidget {
           width: 20,
         ),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Kuretakeso Hott',
+              space.name,
               style: blackTextStyle.copyWith(fontSize: 18),
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            Text.rich(
+              TextSpan(
+                text: '\$${space.price}',
+                style: purpleTextStyle.copyWith(fontSize: 16),
+                children: [
+                  TextSpan(
+                      text: '/ month',
+                      style: greykTextStyle.copyWith(fontSize: 16)),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              '${space.city}, ${space.country}',
+              style: greykTextStyle,
             )
           ],
         )
