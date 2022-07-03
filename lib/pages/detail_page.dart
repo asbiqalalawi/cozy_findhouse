@@ -1,11 +1,14 @@
+import 'package:cozy_findhouse/models/space.dart';
 import 'package:cozy_findhouse/pages/error_page.dart';
 import 'package:cozy_findhouse/theme.dart';
 import 'package:cozy_findhouse/widgets/facility_item.dart';
+import 'package:cozy_findhouse/widgets/rating_item.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatelessWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  const DetailPage({Key? key, required this.space}) : super(key: key);
+  final Space space;
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +26,16 @@ class DetailPage extends StatelessWidget {
       }
     }
 
+    int index = 0;
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
         bottom: false,
         child: Stack(
           children: [
-            Image.asset(
-              'assets/city3.png',
+            Image.network(
+              space.imageUrl,
               width: double.infinity,
               height: 350,
               fit: BoxFit.cover,
@@ -60,68 +65,45 @@ class DetailPage extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Kuretakeso Hott',
-                                  style: blackTextStyle.copyWith(fontSize: 22),
-                                ),
-                                const SizedBox(
-                                  height: 2,
-                                ),
-                                Text.rich(
-                                  TextSpan(
-                                    text: '\$52',
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    space.name,
                                     style:
-                                        purpleTextStyle.copyWith(fontSize: 16),
-                                    children: [
-                                      TextSpan(
-                                          text: '/ month',
-                                          style: greykTextStyle.copyWith(
-                                              fontSize: 16)),
-                                    ],
+                                        blackTextStyle.copyWith(fontSize: 22),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text.rich(
+                                    TextSpan(
+                                      text: '\$${space.price}',
+                                      style: purpleTextStyle.copyWith(
+                                          fontSize: 16),
+                                      children: [
+                                        TextSpan(
+                                            text: '/ month',
+                                            style: greykTextStyle.copyWith(
+                                                fontSize: 16)),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             Row(
-                              children: [
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                const SizedBox(
-                                  width: 2,
-                                ),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                const SizedBox(
-                                  width: 2,
-                                ),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                const SizedBox(
-                                  width: 2,
-                                ),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                const SizedBox(
-                                  width: 2,
-                                ),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                  color: const Color(0xff989BA1),
-                                ),
-                              ],
-                            )
+                              children: [1, 2, 3, 4, 5].map((e) {
+                                index++;
+                                return Container(
+                                  margin:
+                                      EdgeInsets.only(left: index == 1 ? 0 : 2),
+                                  child: RatingItem(
+                                      index: e, rating: space.rating),
+                                );
+                              }).toList(),
+                            ),
                           ],
                         ),
                       ),
@@ -143,19 +125,19 @@ class DetailPage extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: edge),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             FacilityItem(
                                 imageUrl: 'assets/icon_kitchen.png',
                                 name: 'kitchen',
-                                total: 2),
+                                total: space.numberOfKitchens!),
                             FacilityItem(
                                 imageUrl: 'assets/icon_bedroom.png',
                                 name: 'bedroom',
-                                total: 3),
+                                total: space.numberOfBedrooms!),
                             FacilityItem(
                                 imageUrl: 'assets/icon_lemari.png',
                                 name: 'Big Lemari',
-                                total: 3),
+                                total: space.numberOfCupboards!),
                           ],
                         ),
                       ),
@@ -177,38 +159,24 @@ class DetailPage extends StatelessWidget {
                         height: 88,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                          children: [
-                            SizedBox(
-                              width: edge,
-                            ),
-                            Image.asset(
-                              'assets/photo1.png',
-                              width: 110,
-                              height: 88,
-                              fit: BoxFit.cover,
-                            ),
-                            const SizedBox(
-                              width: 18,
-                            ),
-                            Image.asset(
-                              'assets/photo2.png',
-                              width: 110,
-                              height: 88,
-                              fit: BoxFit.cover,
-                            ),
-                            const SizedBox(
-                              width: 18,
-                            ),
-                            Image.asset(
-                              'assets/photo3.png',
-                              width: 110,
-                              height: 88,
-                              fit: BoxFit.cover,
-                            ),
-                            SizedBox(
-                              width: edge,
-                            ),
-                          ],
+                          children: space.photos!.map((e) {
+                            index++;
+                            return Container(
+                              margin: EdgeInsets.only(
+                                left: index == 0 ? edge : 18,
+                                right: index == space.photos!.length ? edge : 0,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.network(
+                                  e,
+                                  width: 110,
+                                  height: 88,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ),
                       const SizedBox(
@@ -231,14 +199,12 @@ class DetailPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Jln. Kappan Sukses No. 20,\nPalembang',
+                              space.address!,
                               style: greykTextStyle,
                             ),
                             InkWell(
                               onTap: () {
-                                // _launchUrl(
-                                // 'https://www.google.com/maps/place/National+Monument/@-6.1753924,106.8249641,17z/data=!3m1!4b1!4m5!3m4!1s0x2e69f5d2e764b12d:0x3d2ad6e1e0e9bcc8!8m2!3d-6.1753924!4d106.8271528');
-                                _launchUrl('dsjaflsd');
+                                _launchUrl(space.mapUrl!);
                               },
                               child: Image.asset(
                                 'assets/btn_map.png',
@@ -252,7 +218,7 @@ class DetailPage extends StatelessWidget {
                         height: 40,
                       ),
                       InkWell(
-                        onTap: (() => _launchUrl('tel:+6282280539493')),
+                        onTap: (() => _launchUrl('tel:${space.phone}')),
                         child: Container(
                           margin: EdgeInsets.symmetric(horizontal: edge),
                           height: 50,

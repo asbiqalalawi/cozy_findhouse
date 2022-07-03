@@ -18,7 +18,7 @@ class SpaceCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const DetailPage(),
+            builder: (context) => DetailPage(space: space),
           ),
         );
       },
@@ -31,8 +31,10 @@ class SpaceCard extends StatelessWidget {
               width: 130,
               child: Stack(
                 children: [
-                  Image.asset(
+                  Image.network(
                     space.imageUrl,
+                    height: 110,
+                    width: 130,
                     fit: BoxFit.cover,
                   ),
                   Align(
@@ -67,36 +69,38 @@ class SpaceCard extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                space.name,
-                style: blackTextStyle.copyWith(fontSize: 18),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Text.rich(
-                TextSpan(
-                  text: '\$${space.price}',
-                  style: purpleTextStyle.copyWith(fontSize: 16),
-                  children: [
-                    TextSpan(
-                        text: '/ month',
-                        style: greykTextStyle.copyWith(fontSize: 16)),
-                  ],
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  space.name,
+                  style: blackTextStyle.copyWith(fontSize: 18),
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                '${space.city}, ${space.country}',
-                style: greykTextStyle,
-              )
-            ],
-          )
+                const SizedBox(
+                  height: 2,
+                ),
+                Text.rich(
+                  TextSpan(
+                    text: '\$${space.price}',
+                    style: purpleTextStyle.copyWith(fontSize: 16),
+                    children: [
+                      TextSpan(
+                          text: '/ month',
+                          style: greykTextStyle.copyWith(fontSize: 16)),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  '${space.city}, ${space.country}',
+                  style: greykTextStyle,
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );

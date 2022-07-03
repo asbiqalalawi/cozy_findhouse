@@ -1,5 +1,7 @@
+import 'package:cozy_findhouse/provider/space_provider.dart';
 import 'package:cozy_findhouse/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/city.dart';
 import '../models/space.dart';
@@ -14,6 +16,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var spaceProvider = Provider.of<SpaceProvider>(context);
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -104,48 +108,31 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            ListView(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: edge),
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              children: [
-                SpaceCard(
-                  space: Space(
-                      id: 1,
-                      name: 'Kuretakeso Hott',
-                      imageUrl: 'assets/space1.png',
-                      city: 'Bandung',
-                      country: 'Germany',
-                      price: 52,
-                      rating: 4),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SpaceCard(
-                  space: Space(
-                      id: 2,
-                      name: 'Roemah Nenek',
-                      imageUrl: 'assets/space2.png',
-                      city: 'Seattle',
-                      country: 'Bogor',
-                      price: 11,
-                      rating: 5),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                SpaceCard(
-                  space: Space(
-                      id: 3,
-                      name: 'Darrling How',
-                      imageUrl: 'assets/space3.png',
-                      city: 'Jakarta',
-                      country: 'Indonesia',
-                      price: 20,
-                      rating: 3),
-                ),
-              ],
+              child: FutureBuilder<List<Space>>(
+                  future: spaceProvider.getRecommendedSpace(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<Space> space = snapshot.data!;
+
+                      int index = 0;
+
+                      return Column(
+                        children: space.map((e) {
+                          index++;
+                          return Container(
+                            margin: EdgeInsets.only(top: index == 1 ? 0 : 30),
+                            child: SpaceCard(space: e),
+                          );
+                        }).toList(),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }),
             ),
             const SizedBox(
               height: 30,
