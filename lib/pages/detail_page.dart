@@ -1,3 +1,4 @@
+import 'package:cozy_findhouse/pages/error_page.dart';
 import 'package:cozy_findhouse/theme.dart';
 import 'package:cozy_findhouse/widgets/facility_item.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,12 @@ class DetailPage extends StatelessWidget {
       if (await canLaunchUrl(Uri.parse(url))) {
         launchUrl(Uri.parse(url));
       } else {
-        throw (url);
+        // throw (url);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ErrorPage(),
+            ));
       }
     }
 
@@ -230,8 +236,9 @@ class DetailPage extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                _launchUrl(
-                                    'https://www.google.com/maps/place/National+Monument/@-6.1753924,106.8249641,17z/data=!3m1!4b1!4m5!3m4!1s0x2e69f5d2e764b12d:0x3d2ad6e1e0e9bcc8!8m2!3d-6.1753924!4d106.8271528');
+                                // _launchUrl(
+                                // 'https://www.google.com/maps/place/National+Monument/@-6.1753924,106.8249641,17z/data=!3m1!4b1!4m5!3m4!1s0x2e69f5d2e764b12d:0x3d2ad6e1e0e9bcc8!8m2!3d-6.1753924!4d106.8271528');
+                                _launchUrl('dsjaflsd');
                               },
                               child: Image.asset(
                                 'assets/btn_map.png',
