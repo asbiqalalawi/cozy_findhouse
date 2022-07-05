@@ -91,6 +91,36 @@ class HomePage extends StatelessWidget {
                   const SizedBox(
                     width: 20,
                   ),
+                  CityCard(
+                    city: City(
+                        id: 4,
+                        name: 'Palembang',
+                        imageUrl: 'assets/city4.png',
+                        isPopular: false),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  CityCard(
+                    city: City(
+                        id: 5,
+                        name: 'Aceh',
+                        imageUrl: 'assets/city5.png',
+                        isPopular: true),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  CityCard(
+                    city: City(
+                        id: 6,
+                        name: 'Bogor',
+                        imageUrl: 'assets/city6.png',
+                        isPopular: false),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
                 ],
               ),
             ),
