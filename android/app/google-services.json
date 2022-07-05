@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "71075392462",
+    "project_id": "cozy-findhouse",
+    "storage_bucket": "cozy-findhouse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71075392462:android:40d7a5a7897a24b26e199f",
+        "android_client_info": {
+          "package_name": "com.example.cozy_findhouse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71075392462-83q0u5gv9u3h8m24shlgt56ghh4emb2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6ZmOVKQ0c7v-DzjIzjvSAjEIJ_A9mgwg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71075392462-83q0u5gv9u3h8m24shlgt56ghh4emb2s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
